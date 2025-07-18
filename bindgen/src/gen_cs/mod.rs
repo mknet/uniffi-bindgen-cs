@@ -12,7 +12,7 @@ use askama::Template;
 use heck::{ToLowerCamelCase, ToUpperCamelCase};
 use serde::{Deserialize, Serialize};
 
-use uniffi_bindgen::backend::{TemplateExpression, Type};
+use uniffi_bindgen::backend::Type;
 use uniffi_bindgen::interface::*;
 use uniffi_bindgen::ComponentInterface;
 
@@ -227,7 +227,8 @@ impl<'a> CsWrapper<'a> {
 
     pub fn initialization_fns(&self) -> Vec<String> {
         self.ci
-            .iter_types()
+            .types()
+            .iter()
             .map(|t| CsCodeOracle.find(t))
             .filter_map(|ct| ct.initialization_fn())
             .collect()
@@ -300,7 +301,6 @@ impl<T: AsType> AsCodeType for T {
                 key_type,
                 value_type,
             } => Box::new(compounds::MapCodeType::new(*key_type, *value_type)),
-            Type::External { name, .. } => Box::new(external::ExternalCodeType::new(name)),
             Type::Custom { name, .. } => Box::new(custom::CustomCodeType::new(name)),
         }
     }
@@ -408,6 +408,7 @@ impl CsCodeOracle {
                 }
             },
             FfiType::VoidPointer => "IntPtr".to_string(),
+            FfiType::MutReference(_) => "IntPtr".to_string(),
         }
     }
 }

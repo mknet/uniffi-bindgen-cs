@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461;net6.0</TargetFrameworks>
+    <TargetFrameworks>net461;net9.0</TargetFrameworks>
     <LangVersion>10.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <!-- Allow testing internals of generated code -->
   <ItemGroup>
+    <Compile Include="gen/*.cs" />
     <InternalsVisibleTo Include="UniffiCS.BindingTests" />
     <PackageReference Include="IsExternalInit" Version="1.0.3"/>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />

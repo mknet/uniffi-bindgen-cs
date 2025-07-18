@@ -1,40 +1,158 @@
-use paste::paste;
 use std::collections::HashMap;
 
-macro_rules! define_custom_builtin_type {
-    ($custom:ty, $underlying:ty) => {
-        paste! {
-            pub struct $custom(pub $underlying);
-
-            impl UniffiCustomTypeConverter for $custom {
-                type Builtin = $underlying;
-
-                fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
-                    Ok($custom(val))
-                }
-
-                fn from_custom(obj: Self) -> Self::Builtin {
-                    obj.0
-                }
-            }
-        }
-    };
+pub struct MyString(pub String);
+impl UniffiCustomTypeConverter for MyString {
+    type Builtin = String;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(MyString(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
 }
 
-define_custom_builtin_type!(MyString, String);
-define_custom_builtin_type!(Array, Vec<String>);
-define_custom_builtin_type!(Table, HashMap<String, String>);
-define_custom_builtin_type!(Boolean, bool);
-define_custom_builtin_type!(Int8, i8);
-define_custom_builtin_type!(Int16, i16);
-define_custom_builtin_type!(Int32, i32);
-define_custom_builtin_type!(Int64, i64);
-define_custom_builtin_type!(UInt8, u8);
-define_custom_builtin_type!(UInt16, u16);
-define_custom_builtin_type!(UInt32, u32);
-define_custom_builtin_type!(UInt64, u64);
-define_custom_builtin_type!(Float, f32);
-define_custom_builtin_type!(Double, f64);
+pub struct Array(pub Vec<String>);
+impl UniffiCustomTypeConverter for Array {
+    type Builtin = Vec<String>;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Array(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Table(pub HashMap<String, String>);
+impl UniffiCustomTypeConverter for Table {
+    type Builtin = HashMap<String, String>;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Table(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Boolean(pub bool);
+impl UniffiCustomTypeConverter for Boolean {
+    type Builtin = bool;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Boolean(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Int8(pub i8);
+impl UniffiCustomTypeConverter for Int8 {
+    type Builtin = i8;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Int8(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Int16(pub i16);
+impl UniffiCustomTypeConverter for Int16 {
+    type Builtin = i16;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Int16(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Int32(pub i32);
+impl UniffiCustomTypeConverter for Int32 {
+    type Builtin = i32;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Int32(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Int64(pub i64);
+impl UniffiCustomTypeConverter for Int64 {
+    type Builtin = i64;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Int64(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct UInt8(pub u8);
+impl UniffiCustomTypeConverter for UInt8 {
+    type Builtin = u8;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(UInt8(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct UInt16(pub u16);
+impl UniffiCustomTypeConverter for UInt16 {
+    type Builtin = u16;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(UInt16(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct UInt32(pub u32);
+impl UniffiCustomTypeConverter for UInt32 {
+    type Builtin = u32;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(UInt32(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct UInt64(pub u64);
+impl UniffiCustomTypeConverter for UInt64 {
+    type Builtin = u64;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(UInt64(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Float(pub f32);
+impl UniffiCustomTypeConverter for Float {
+    type Builtin = f32;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Float(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
+
+pub struct Double(pub f64);
+impl UniffiCustomTypeConverter for Double {
+    type Builtin = f64;
+    fn into_custom(val: Self::Builtin) -> uniffi::Result<Self> {
+        Ok(Double(val))
+    }
+    fn from_custom(obj: Self) -> Self::Builtin {
+        obj.0
+    }
+}
 
 pub struct CustomTypesBuiltin {
     string: MyString,
