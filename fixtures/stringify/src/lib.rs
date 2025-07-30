@@ -22,6 +22,29 @@ macro_rules! define_parse_function {
     };
 }
 
+// Special implementations for f32 and f64 to match C# formatting
+#[uniffi::export]
+fn to_string_f32(value: f32) -> String {
+    // Use the same formatting as C#'s float.ToString()
+    value.to_string()
+}
+
+#[uniffi::export]
+fn parse_f32(value: String) -> f32 {
+    value.parse::<f32>().unwrap()
+}
+
+#[uniffi::export]
+fn to_string_f64(value: f64) -> String {
+    // Use the same formatting as C#'s double.ToString()
+    value.to_string()
+}
+
+#[uniffi::export]
+fn parse_f64(value: String) -> f64 {
+    value.parse::<f64>().unwrap()
+}
+
 define_parse_function!(i8);
 define_parse_function!(i16);
 define_parse_function!(i32);
@@ -30,5 +53,3 @@ define_parse_function!(u8);
 define_parse_function!(u16);
 define_parse_function!(u32);
 define_parse_function!(u64);
-define_parse_function!(f32);
-define_parse_function!(f64);
