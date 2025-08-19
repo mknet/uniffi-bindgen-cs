@@ -66,10 +66,12 @@ impl uniffi_bindgen::BindingGenerator for BindingGenerator {
     type Config = gen_cs::Config;
 
     fn new_config(&self, root_toml: &toml::Value) -> Result<Self::Config> {
-        Ok(match root_toml.get("bindings").and_then(|b| b.get("csharp")) {
+        Ok(
+            match root_toml.get("bindings").and_then(|b| b.get("csharp")) {
                 Some(v) => v.clone().try_into()?,
                 None => Default::default(),
-        })
+            },
+        )
     }
 
     fn write_bindings(
@@ -113,7 +115,10 @@ impl uniffi_bindgen::BindingGenerator for BindingGenerator {
                 .get_or_insert_with(|| format!("uniffi.{}", c.ci.namespace()));
 
             c.config.cdylib_name.get_or_insert_with(|| {
-                settings.cdylib.clone().unwrap_or_else(|| format!("uniffi_{}", c.ci.namespace()))
+                settings
+                    .cdylib
+                    .clone()
+                    .unwrap_or_else(|| format!("uniffi_{}", c.ci.namespace()))
             });
         }
         // TODO: external types are not supported
@@ -145,12 +150,12 @@ pub fn main() -> Result<()> {
             .out_dir
             .expect("--out-dir is required when using --library");
 
-                        let config_supplier = {
-                            use uniffi_bindgen::cargo_metadata::CrateConfigSupplier;
-                            let mut cmd = ::cargo_metadata::MetadataCommand::new();
-                            let metadata = cmd.exec().unwrap();
-                            CrateConfigSupplier::from(metadata)
-                        };
+        let config_supplier = {
+            use uniffi_bindgen::cargo_metadata::CrateConfigSupplier;
+            let mut cmd = ::cargo_metadata::MetadataCommand::new();
+            let metadata = cmd.exec().unwrap();
+            CrateConfigSupplier::from(metadata)
+        };
 
         uniffi_bindgen::library_mode::generate_bindings(
             &cli.source,

@@ -21,12 +21,12 @@ mod compounds;
 mod custom;
 mod enum_;
 mod external;
+mod filters;
 pub mod formatting;
 mod miscellany;
 mod object;
 mod primitives;
 mod record;
-mod filters;
 
 trait CodeType: Debug {
     /// The language specific label used to reference this type. This will be used in
@@ -407,7 +407,9 @@ impl CsCodeOracle {
             FfiType::ForeignBytes => "ForeignBytes".to_string(),
             FfiType::Callback(_) => "IntPtr".to_string(),
             FfiType::Reference(typ) => format!("ref {}", self.ffi_type_label(typ, prefix_struct)),
-            FfiType::MutReference(typ) => format!("ref {}", self.ffi_type_label(typ, prefix_struct)),
+            FfiType::MutReference(typ) => {
+                format!("ref {}", self.ffi_type_label(typ, prefix_struct))
+            }
             FfiType::RustCallStatus => "UniffiRustCallStatus".to_string(),
             FfiType::Struct(name) => {
                 if prefix_struct {
@@ -415,7 +417,7 @@ impl CsCodeOracle {
                 } else {
                     self.ffi_struct_name(name)
                 }
-            },
+            }
             FfiType::VoidPointer => "IntPtr".to_string(),
         }
     }
