@@ -81,7 +81,7 @@ impl uniffi_bindgen::BindingGenerator for BindingGenerator {
     ) -> anyhow::Result<()> {
         for Component { ci, config, .. } in components {
             let bindings_file = settings.out_dir.join(format!("{}.cs", ci.namespace()));
-            println!("Writing bindings file {}", bindings_file);
+            println!("Writing bindings file {bindings_file}");
             let mut f = File::create(&bindings_file)?;
 
             let mut bindings = generate_bindings(config, ci)?;
@@ -99,7 +99,7 @@ impl uniffi_bindgen::BindingGenerator for BindingGenerator {
             }
 
             bindings = gen_cs::formatting::add_header(bindings);
-            write!(f, "{}", bindings)?;
+            write!(f, "{bindings}")?;
         }
         Ok(())
     }

@@ -315,9 +315,7 @@ impl CsCodeOracle {
     fn class_name(&self, nm: &str, ci: &ComponentInterface) -> String {
         let name = nm.to_string().to_upper_camel_case();
         // fixup errors.
-        ci.is_name_used_as_error(nm)
-            .then(|| self.convert_error_suffix(&name))
-            .unwrap_or(name)
+        if ci.is_name_used_as_error(nm) { self.convert_error_suffix(&name) } else { name }
     }
 
     fn convert_error_suffix(&self, nm: &str) -> String {
@@ -348,7 +346,7 @@ impl CsCodeOracle {
     }
 
     fn ffi_callback_impl(&self, nm: &str) -> String {
-        format!("UniffiCallbackInterface{}", nm)
+        format!("UniffiCallbackInterface{nm}")
     }
 
     /// Get the idiomatic C# rendering of an FFI struct name
@@ -357,11 +355,11 @@ impl CsCodeOracle {
     }
 
     fn interface_name(&self, nm: &str) -> String {
-        format!("I{}", nm)
+        format!("I{nm}")
     }
 
     fn impl_name(&self, nm: &str) -> String {
-        format!("{}Impl", nm)
+        format!("{nm}Impl")
     }
 
     fn object_names(&self, obj: &Object, ci: &ComponentInterface) -> (String, String) {
