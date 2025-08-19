@@ -161,17 +161,6 @@ impl<'a> TypeRenderer<'a> {
         }
     }
 
-    // Get the package name for an external type
-    fn external_type_package_name(&self, module_path: &str, namespace: &str) -> String {
-        // config overrides are keyed by the crate name, default fallback is the namespace.
-        let crate_name = module_path.split("::").next().unwrap();
-        match self.config.external_packages.get(crate_name) {
-            Some(name) => name.clone(),
-            // unreachable in library mode - all deps are in our config with correct namespace.
-            None => format!("uniffi.{namespace}"),
-        }
-    }
-
     // The following methods are used by the `Types.kt` macros.
 
     // Helper for the including a template, but only once.
